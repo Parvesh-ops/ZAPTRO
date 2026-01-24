@@ -8,10 +8,8 @@ const Category = () => {
     throw new Error("Category must be used within DataProvider");
   }
 
-  const { data, loading } = context;
+  const { loading, categories } = context;
 
-  // Extract unique categories 
-  const categories = [...new Set(data.map((item) => item.category))];
 
   if (loading) {
     return <p className="text-center py-6">Loading ...</p>;
