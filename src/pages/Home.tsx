@@ -1,5 +1,6 @@
 import Carousel from "../components/Carousel/Carousel"
 import Category from "../components/Category/Category"
+import Features from "../components/Features/Features"
 import MidBanner from "../components/MidBanner/MidBanner"
 
 
@@ -9,6 +10,7 @@ const Home = () => {
       <Carousel />
       <Category />
       <MidBanner />
+      <Features />
     </div>
   )
 }
