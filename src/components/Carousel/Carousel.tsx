@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import type { CSSProperties } from "react";
+import Category from "../category/Category";
 
 // Arrow component props interface for custom arrows
 interface ArrowProps {
@@ -83,6 +84,7 @@ const SamplePrevArrow = ({ onClick }: ArrowProps) => {
 
 
   return (
+    <div>
     <Slider {...settings}>
       {data?.slice(0, 7).map((item) => (
         <div
@@ -127,6 +129,8 @@ const SamplePrevArrow = ({ onClick }: ArrowProps) => {
         </div>
       ))}
     </Slider>
+    <Category />
+    </div>
 
   );
 };
