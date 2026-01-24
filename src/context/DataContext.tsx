@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import type { Product } from "../types/product";
 import axios from "axios";
+import api from "../api/api";
 
 interface DataContextType {
   data: Product[];
@@ -19,9 +20,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchAllProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get<Product[]>(
-        "https://fakestoreapi.com/products"
-      );
+      // const response = await axios.get<Product[]>( "https://fakestoreapi.com/products" ); 
+      // setData(response.data)
+      // ----------------OR-----------------//
+      const response = await api.get<Product[]>("/products");
       setData(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -38,14 +40,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     fetchAllProducts();
   }, []);
 
-    // Extract unique categories 
-  const categories = ["All",...new Set(data.map((item) => item.category))];
+  // Extract unique categories 
+  const categories = ["All", ...new Set(data.map((item) => item.category))];
 
   //Ectract unique Brand Data
-    const uniqueBrand = ["All",...new Set(data.map((item) => item.uniqueBrand))];
+  const uniqueBrand = ["All", ...new Set(data.map((item) => item.uniqueBrand))];
 
   return (
-    <DataContext.Provider value={{ data, loading, fetchAllProducts,categories,uniqueBrand }}>
+    <DataContext.Provider value={{ data, loading, fetchAllProducts, categories, uniqueBrand }}>
       {children}
     </DataContext.Provider>
   );
