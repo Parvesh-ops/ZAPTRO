@@ -7,7 +7,7 @@ interface DataContextType {
   loading: boolean;
   fetchAllProducts: () => Promise<void>;
   categories: string[];
-  brand: string[]
+  uniqueBrand: string[]
 }
 
 export const DataContext = createContext<DataContextType | null>(null);
@@ -42,10 +42,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const categories = ["All",...new Set(data.map((item) => item.category))];
 
   //Ectract unique Brand Data
-    const brand = ["All",...new Set(data.map((item) => item.brand))];
+    const uniqueBrand = ["All",...new Set(data.map((item) => item.uniqueBrand))];
 
   return (
-    <DataContext.Provider value={{ data, loading, fetchAllProducts,categories,brand }}>
+    <DataContext.Provider value={{ data, loading, fetchAllProducts,categories,uniqueBrand }}>
       {children}
     </DataContext.Provider>
   );
