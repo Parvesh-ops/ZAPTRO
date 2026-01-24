@@ -6,7 +6,8 @@ interface DataContextType {
   data: Product[];
   loading: boolean;
   fetchAllProducts: () => Promise<void>;
-  categories: string[]
+  categories: string[];
+  brand: string[]
 }
 
 export const DataContext = createContext<DataContextType | null>(null);
@@ -38,10 +39,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
     // Extract unique categories 
-  const categories = [...new Set(data.map((item) => item.category))];
+  const categories = ["All",...new Set(data.map((item) => item.category))];
+
+  //Ectract unique Brand Data
+    const brand = ["All",...new Set(data.map((item) => item.brand))];
 
   return (
-    <DataContext.Provider value={{ data, loading, fetchAllProducts,categories }}>
+    <DataContext.Provider value={{ data, loading, fetchAllProducts,categories,brand }}>
       {children}
     </DataContext.Provider>
   );
