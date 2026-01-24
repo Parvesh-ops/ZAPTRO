@@ -1,9 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import type { Product } from "../types/product";
 import axios from "axios";
 
 interface DataContextType {
-  data: Product[] | null;
+  data: Product[];
   loading: boolean;
   fetchAllProducts: () => Promise<void>;
 }
@@ -11,7 +11,7 @@ interface DataContextType {
 export const DataContext = createContext<DataContextType | null>(null);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
-  const [data, setData] = useState<Product[] | null>(null);
+  const [data, setData] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchAllProducts = async () => {
@@ -22,13 +22,16 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       );
       setData(response.data);
     } catch (error) {
-      console.error(error);
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.status);
+      }
+      console.error("An error occurred while fetching products:", error);
+
     } finally {
       setLoading(false);
     }
   };
 
- 
   useEffect(() => {
     fetchAllProducts();
   }, []);
