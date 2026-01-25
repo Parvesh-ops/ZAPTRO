@@ -15,3 +15,6 @@ export interface Rating {
     count: number;
 }
 
+export interface CartItems extends Product {
+    quantity: number
+}

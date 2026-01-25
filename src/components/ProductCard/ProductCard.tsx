@@ -1,6 +1,8 @@
 import { FaShoppingCart } from "react-icons/fa"
 import type { Product } from "../../types/product"
 import { useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { CartContext } from "../../context/CartContext"
 
 interface ProductProps {
     product: Product
@@ -9,7 +11,11 @@ interface ProductProps {
 
 const ProductCard = ({ product }: ProductProps) => {
     const navigate = useNavigate() // for singleProduct
-    
+    const context = useContext(CartContext) // CartContext from context
+
+    if (!context) throw new Error("Must be used within CartProvider");
+    const { addToCart } = context
+
     return (
         <div className="border rounded-lg cursor-pointer border-gray-200 hover:scale-105 hover:shadow-xl transition-transform duration-300 bg-white overflow-hidden">
 
@@ -35,6 +41,7 @@ const ProductCard = ({ product }: ProductProps) => {
 
                 {/* Add to Cart Button */}
                 <button
+                    onClick={() => addToCart(product)}
                     className="bg-red-500 hover:bg-red-600 px-4 py-2 text-base rounded-md text-white w-full flex items-center justify-center gap-2 font-semibold transition-colors duration-200"
                 >
                     <FaShoppingCart className="w-5 h-5" />
