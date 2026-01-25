@@ -1,5 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa"
 import type { Product } from "../../types/product"
+import { useNavigate } from "react-router-dom"
 
 interface ProductProps {
     product: Product
@@ -7,6 +8,8 @@ interface ProductProps {
 
 
 const ProductCard = ({ product }: ProductProps) => {
+    const navigate = useNavigate() // for singleProduct
+    
     return (
         <div className="border rounded-lg cursor-pointer border-gray-200 hover:scale-105 hover:shadow-xl transition-transform duration-300 bg-white overflow-hidden">
 
@@ -15,6 +18,7 @@ const ProductCard = ({ product }: ProductProps) => {
                 <img
                     src={product.image}
                     alt={product.title}
+                    onClick={() => navigate(`/products/${product.id}`)}  // for singleProduct
                     className="object-contain h-50 w-50"
                 />
             </div>
