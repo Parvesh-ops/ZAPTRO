@@ -2,13 +2,16 @@ import { IoCartOutline, IoMenu, IoClose } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useFavorite } from "../../context/FavoriteContext";
+import { GrFavorite } from "react-icons/gr";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const context = useContext(CartContext) // CartContext from context
 
-  if (!context) throw new Error("Must be used within CartProvider");
-  const { cartItems } = context
+  const cartContext = useContext(CartContext);
+  const { cartItems } = cartContext!;
+
+  const { favorites } = useFavorite();
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `${isActive ? "text-red-500 border-b-2 border-red-500" : "text-gray-800"}
@@ -32,6 +35,14 @@ const Header = () => {
           <NavLink to="/about" className={navLinkClass}>About</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
 
+          {/* Favorite */}
+          <Link to="/favorite" className="relative">
+            <GrFavorite  className="h-7 w-7" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+              {favorites.length}
+            </span>
+          </Link>
+
           {/* Cart */}
           <Link to="/cart" className="relative">
             <IoCartOutline className="h-7 w-7" />
@@ -46,7 +57,7 @@ const Header = () => {
           <Link to="/cart" className="relative">
             <IoCartOutline className="h-7 w-7" />
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
-              0
+              {cartItems.length}
             </span>
           </Link>
 
