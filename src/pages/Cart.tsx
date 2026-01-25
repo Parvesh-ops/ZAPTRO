@@ -12,17 +12,27 @@ const Cart = () => {
     decreaseQty,
     removeFromCart,
     totalPrice,
+    clearCart,
   } = useCart();
 
   const navigate = useNavigate();
 
   return (
-    <div className="mt-10 max-w-7xl mb-10 px-4 lg:px-0">
+    <div className="mt-10 max-w-7xl mx-auto mb-10 px-4">
       {cartItems.length > 0 ? (
         <>
-          <h1 className="text-2xl text-center font-bold mb-6">
-            Shopping Cart 
-          </h1>
+          {/* HEADER */}
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-bold">Shopping Cart</h1>
+
+            <button
+              onClick={clearCart}
+              className="flex font-bold items-center gap-2 text-l text-red-500 hover:text-red-600 transition"
+            >
+              <FaRegTrashAlt />
+              Clear Cart
+            </button>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* CART ITEMS */}
@@ -32,14 +42,14 @@ const Cart = () => {
                   key={item.id}
                   className="bg-white border rounded-xl p-4 flex flex-col sm:flex-row gap-4 shadow-sm"
                 >
-                  {/* Image */}
+                  {/* IMAGE */}
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-23 h-23 object-contain mx-auto sm:mx-0"
+                    className="w-24 h-24 object-contain mx-auto sm:mx-0"
                   />
 
-                  {/* Info */}
+                  {/* INFO */}
                   <div className="flex-1">
                     <h2 className="font-semibold text-gray-800 line-clamp-2">
                       {item.title}
@@ -48,8 +58,8 @@ const Cart = () => {
                       {item.category}
                     </p>
 
-                    <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
-                      {/* Quantity */}
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
+                      {/* QUANTITY */}
                       <div className="flex items-center border rounded-md overflow-hidden">
                         <button
                           onClick={() => decreaseQty(item.id)}
@@ -68,7 +78,7 @@ const Cart = () => {
                         </button>
                       </div>
 
-                      {/* Price */}
+                      {/* PRICE */}
                       <div className="text-right">
                         <p className="text-sm text-gray-500">Price</p>
                         <p className="font-bold text-red-500">
@@ -78,10 +88,10 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  {/* Remove */}
+                  {/* REMOVE ITEM */}
                   <button
                     onClick={() => removeFromCart(item.id)}
-                    className="self-start sm:self-center text-gray-400 hover:text-red-500"
+                    className="self-start sm:self-center text-gray-400 hover:text-red-500 transition"
                   >
                     <FaRegTrashAlt size={20} />
                   </button>
@@ -129,7 +139,7 @@ const Cart = () => {
 
               <button
                 onClick={() => navigate("/products")}
-                className="mt-3 w-full border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-100"
+                className="mt-3 w-full border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
               >
                 Continue Shopping
               </button>
@@ -147,7 +157,7 @@ const Cart = () => {
           </p>
           <button
             onClick={() => navigate("/products")}
-            className="bg-red-500 text-white px-6 py-3 rounded-lg"
+            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition"
           >
             Start Shopping
           </button>
