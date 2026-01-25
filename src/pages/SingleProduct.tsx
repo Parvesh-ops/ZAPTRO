@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import api from "../api/api"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import type { Product } from "../types/product"
 import Breadcrums from "../components/Breadcrums/Breadcrums"
 import { FaShoppingCart } from "react-icons/fa"
+import { CartContext } from "../context/CartContext"
 // import Loading from '../assets/Loading4.webm'
 
 
@@ -13,6 +14,13 @@ const SingleProduct = () => {
     const { id } = useParams<string>()   //useParams<string>() 
     const [singleProduct, setSingleProduct] = useState<Product | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
+    const [quantity, setQuantity] = useState<number>(1)
+    
+
+    const context = useContext(CartContext) // CartContext from context
+
+    if (!context) throw new Error("Must be used within CartProvider");
+    const { addToCart } = context
 
     const getSingleProduct = async () => {
         try {
@@ -100,7 +108,9 @@ const SingleProduct = () => {
                         <label className='text-sm sm:text-base font-medium text-gray-700'>Quantity:</label>
                         <input
                             type="number"
+                            value={quantity}
                             min={1}
+                            onChange={(e) => setQuantity(Number(e.target.value))}
                             className='w-16 sm:w-20 border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-red-500'
                         />
                     </div>
@@ -108,7 +118,7 @@ const SingleProduct = () => {
                     {/* Action Buttons */}
                     <div className='flex flex-col sm:flex-row gap-3 mt-4'>
                         <button
-
+                           onClick={() => addToCart(singleProduct, quantity)}  
                             className='w-full sm:w-auto px-6 py-2 flex items-center justify-center gap-2 text-white bg-red-500 hover:bg-red-600 rounded-md shadow-md transition'
                         >
                             <FaShoppingCart /> Add to Cart

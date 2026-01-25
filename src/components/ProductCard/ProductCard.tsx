@@ -41,7 +41,7 @@ const ProductCard = ({ product }: ProductProps) => {
 
                 {/* Add to Cart Button */}
                 <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => addToCart(product,1)}
                     className="bg-red-500 hover:bg-red-600 px-4 py-2 text-base rounded-md text-white w-full flex items-center justify-center gap-2 font-semibold transition-colors duration-200"
                 >
                     <FaShoppingCart className="w-5 h-5" />

@@ -4,7 +4,7 @@ import type { CartItems, Product } from "../types/product";
 interface CartContextType {
     cartItems: CartItems[];
     setCartItems: React.Dispatch<React.SetStateAction<CartItems[]>>;
-    addToCart: (product: Product) => void
+    addToCart: (product: Product, quantity: number) => void;
 }
 
 export const CartContext = createContext<CartContextType | null>(null);
