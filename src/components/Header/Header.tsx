@@ -18,7 +18,7 @@ const Header = () => {
      transition-all`;
 
   return (
-    <header className="bg-white shadow-md px-4">
+    <header className="bg-white shadow-md px-4 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center py-3">
 
         {/* Logo */}
@@ -37,7 +37,7 @@ const Header = () => {
 
           {/* Favorite */}
           <Link to="/favorite" className="relative">
-            <GrFavorite  className="h-7 w-7" />
+            <GrFavorite className="h-7 w-7" />
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
               {favorites.length}
             </span>
@@ -52,12 +52,19 @@ const Header = () => {
           </Link>
         </nav>
 
-        {/* Mobile Icons */}
+        {/* Mobile Icons for cart and favorite*/}
         <div className="flex items-center gap-4 md:hidden">
           <Link to="/cart" className="relative">
             <IoCartOutline className="h-7 w-7" />
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
               {cartItems.length}
+            </span>
+          </Link>
+
+          <Link to="/favorite" className="relative">
+            <GrFavorite className="h-7 w-7" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+              {favorites.length}
             </span>
           </Link>
 
