@@ -1,22 +1,24 @@
 import { useFavorite } from "../context/FavoriteContext";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Favorite = () => {
-  const { favorites, removeFromFavorites } = useFavorite();
+  const { favorites } = useFavorite();
+  const { addToCart} = useCart()
   const navigate = useNavigate();
 
   if (favorites.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+        <div className="bg-white rounded-xl shadow-md p-8 text-center max-w-sm w-full">
           <h2 className="text-2xl font-bold mb-2">No favorites yet ❤️</h2>
           <p className="text-gray-600 mb-6">
-            Add some products to your favorites list.
+            Add products to your favorites to see them here.
           </p>
           <button
             onClick={() => navigate("/products")}
-            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
+            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition"
           >
             Browse Products
           </button>
@@ -26,34 +28,60 @@ const Favorite = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
+    <div className="min-h-screen bg-gray-50 px-4 py-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">My Favorites</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">
+          My Favorites
+        </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
           {favorites.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+              className="bg-white rounded-xl  hover:shadow-lg transition-shadow duration-300 flex flex-col"
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-56 object-contain p-4 bg-gray-100"
-              />
+        
+              {/* Image */}
+              <div
+                onClick={() => navigate(`/products/${item.id}`)}
+                className="flex items-center justify-center h-52 bg-gray-100 p-4 cursor-pointer hover:scale-105 transition-transform"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-40 w-40 object-contain"
+                />
+              </div>
 
-              <div className="p-4">
-                <h2 className="font-semibold text-lg line-clamp-2">
+
+              {/* Content */}
+              <div className="p-4 gap-2 flex flex-col grow">
+                <h2 className="font-semibold text-base text-gray-800 line-clamp-2">
                   {item.title}
                 </h2>
-                <p className="text-xl font-bold mt-2">${item.price}</p>
+
+                {/* Price */}
+                <p className="text-lg font-bold text-gray-900 mt-2">
+                  ${item.price}
+                </p>
+
+                {/* rating */}
+                <p className="text-yellow-400  text-lg">
+                  {"★".repeat(Math.round(item.rating.rate))}
+                  <span className="text-gray-300">
+                    {"★".repeat(5 - Math.round(item.rating.rate))}
+                  </span>
+                  <span className="text-sm text-gray-600">
+                    ({item.rating.count} reviews)
+                  </span>
+                </p>
 
                 <button
-                  onClick={() => removeFromFavorites(item.id)}
-                  className="mt-4 flex items-center justify-center gap-2 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors"
+                  onClick={() =>  addToCart(item)}
+                  className="mt-auto flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
                 >
-                  <FaRegTrashAlt />
-                  Remove
+                  <FaShoppingCart />
+                  Add to Cart
                 </button>
               </div>
             </div>
