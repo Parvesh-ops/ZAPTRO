@@ -46,7 +46,8 @@ const Cart = () => {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-24 h-24 object-contain mx-auto sm:mx-0"
+                    onClick={()=>navigate(`/products/${item.id}`)}
+                    className="w-24 h-24 cursor-pointer object-contain mx-auto sm:mx-0"
                   />
 
                   {/* INFO */}
@@ -65,7 +66,7 @@ const Cart = () => {
                           onClick={() => decreaseQty(item.id)}
                           className="px-3 py-1 text-lg bg-gray-100 hover:bg-gray-200"
                         >
-                          −
+                          -
                         </button>
                         <span className="px-4 font-medium">
                           {item.quantity}
@@ -106,7 +107,7 @@ const Cart = () => {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="flex items-center gap-1">
-                    <LuNotebookText /> Items Total
+                    <LuNotebookText /> Sub Total
                   </span>
                   <span>${totalPrice.toFixed(2)}</span>
                 </div>
@@ -149,15 +150,12 @@ const Cart = () => {
       ) : (
         /* EMPTY CART */
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4 text-center">
-          <h1 className="text-3xl font-bold text-gray-700">
-            Your cart is empty
-          </h1>
-          <p className="text-gray-500">
-            Looks like you haven’t added anything yet
+          <p className="text-gray-700">
+            There are no items in this cart
           </p>
           <button
             onClick={() => navigate("/products")}
-            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition"
+            className="border border-red-600 text-black font-bold px-6 py-3 rounded-lg hover:bg-red-200 transition"
           >
             Start Shopping
           </button>

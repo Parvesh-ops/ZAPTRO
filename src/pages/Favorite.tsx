@@ -12,16 +12,7 @@ const Favorite = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
         <div className="bg-white rounded-xl shadow-md p-8 text-center max-w-sm w-full">
-          <h2 className="text-2xl font-bold mb-2">No favorites yet ❤️</h2>
-          <p className="text-gray-600 mb-6">
-            Add products to your favorites to see them here.
-          </p>
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition"
-          >
-            Browse Products
-          </button>
+          <h2 className="text-2xl font-bold mb-2">No favorites Products</h2>
         </div>
       </div>
     );
