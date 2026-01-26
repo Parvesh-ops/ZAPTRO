@@ -124,7 +124,7 @@ const Cart = () => {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="flex items-center gap-1">
-                    <LuNotebookText /> Sub Total
+                    <LuNotebookText /> Sub Total ({cartItems.length} products)
                   </span>
                   <span>${totalPrice.toFixed(2)}</span>
                 </div>
@@ -183,7 +183,7 @@ const Cart = () => {
               </div>
 
               <button className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition">
-                Proceed to Checkout
+                Proceed to Checkout ({cartItems.length})
               </button>
 
               <button
