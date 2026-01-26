@@ -3,6 +3,7 @@ import type { Product } from "../../types/product"
 import { useNavigate } from "react-router-dom"
 import { useContext, useState } from "react"
 import { CartContext } from "../../context/CartContext"
+import Toast from "../Toast/Toast"
 
 interface ProductProps {
     product: Product
@@ -21,22 +22,13 @@ const ProductCard = ({ product }: ProductProps) => {
         addToCart(product, 1);
 
         setShowAlert(true);
-        setTimeout(() => setShowAlert(false), 2000);
+        setTimeout(() => setShowAlert(false), 3000);
     };
 
     return (
         <>
             {/* ADD TO CART ALERT */}
-            {showAlert && (
-                <div className="fixed top-5 right-5 z-50 animate-slide-in">
-                    <div className="bg-white border border-green-500 shadow-lg rounded-lg px-4 py-3 min-w-65">
-                        <p className="text-green-600 font-semibold">
-                            ✅ Added to cart
-                        </p>
-                        <div className="h-1 bg-green-500 mt-2 rounded animate-progress" />
-                    </div>
-                </div>
-            )}
+           <Toast show ={showAlert} message="Added to Cart!!" type="success" />
 
             <div className="border rounded-lg cursor-pointer border-gray-200 hover:scale-105 hover:shadow-xl transition-transform duration-300 bg-white overflow-hidden">
 

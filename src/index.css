@@ -1,20 +1,23 @@
 @import "tailwindcss";
-@keyframes slide-in {
+
+/* TOAST APPEAR (CENTER) */
+@keyframes toast-slide {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateY(10px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-.animate-slide-in {
-  animation: slide-in 0.4s ease-out;
+.animate-toast-slide {
+  animation: toast-slide 0.25s ease-out;
 }
 
-@keyframes progress {
+/* PROGRESS BAR */
+@keyframes toast-progress {
   from {
     width: 100%;
   }
@@ -23,6 +26,6 @@
   }
 }
 
-.animate-progress {
-  animation: progress 2s linear forwards;
+.animate-toast-progress {
+  animation: toast-progress 2.5s linear forwards;
 }
