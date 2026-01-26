@@ -4,6 +4,9 @@ import { MdDeliveryDining } from "react-icons/md";
 import { GiShoppingBag } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useState } from "react";
+
+const HANDLING_FEE = 5;  // for voulcher
 
 const Cart = () => {
   const {
@@ -15,7 +18,24 @@ const Cart = () => {
     clearCart,
   } = useCart();
 
+  const [voucher, setVoucher] = useState("");
+  const [discount, setDiscount] = useState(0);
+
   const navigate = useNavigate();
+
+  const handleApplyVoucher = () => {
+    if (voucher.trim().toLowerCase() === "save10") {
+      setDiscount(10);
+    } else {
+      setDiscount(0);
+      alert("Invalid voucher code");
+    }
+  };
+
+  const finalTotal = Math.max(
+    totalPrice + HANDLING_FEE - discount,
+    0
+  );
 
   return (
     <div className="mt-10 max-w-7xl mx-auto mb-10 px-4">
@@ -27,7 +47,7 @@ const Cart = () => {
 
             <button
               onClick={clearCart}
-              className="flex font-bold items-center gap-2 text-l text-red-500 hover:text-red-600 transition"
+              className="flex font-bold items-center gap-2 text-red-500 hover:text-red-600 transition"
             >
               <FaRegTrashAlt />
               Clear Cart
@@ -42,15 +62,13 @@ const Cart = () => {
                   key={item.id}
                   className="bg-white border rounded-xl p-4 flex flex-col sm:flex-row gap-4 shadow-sm"
                 >
-                  {/* IMAGE */}
                   <img
                     src={item.image}
                     alt={item.title}
-                    onClick={()=>navigate(`/products/${item.id}`)}
+                    onClick={() => navigate(`/products/${item.id}`)}
                     className="w-24 h-24 cursor-pointer object-contain mx-auto sm:mx-0"
                   />
 
-                  {/* INFO */}
                   <div className="flex-1">
                     <h2 className="font-semibold text-gray-800 line-clamp-2">
                       {item.title}
@@ -89,7 +107,6 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  {/* REMOVE ITEM */}
                   <button
                     onClick={() => removeFromCart(item.id)}
                     className="self-start sm:self-center text-gray-400 hover:text-red-500 transition"
@@ -123,14 +140,45 @@ const Cart = () => {
                   <span className="flex items-center gap-1">
                     <GiShoppingBag /> Handling Fee
                   </span>
-                  <span>$5.00</span>
+                  <span>${HANDLING_FEE.toFixed(2)}</span>
                 </div>
+
+                {/* VOUCHER */}
+                <div className="mt-4">
+                  <label className="block text-sm font-medium mb-1">
+                    Voucher Code
+                  </label>
+
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={voucher}
+                      onChange={(e) => setVoucher(e.target.value)}
+                      placeholder="SAVE10"
+                      className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+                    />
+
+                    <button
+                      onClick={handleApplyVoucher}
+                      className="bg-black text-white px-4 rounded-lg text-sm hover:bg-gray-800 transition"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-600 font-semibold">
+                    <span>Discount</span>
+                    <span>${discount.toFixed(2)}</span>
+                  </div>
+                )}
 
                 <hr />
 
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>${(totalPrice + 5).toFixed(2)}</span>
+                  <span>${finalTotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -150,9 +198,7 @@ const Cart = () => {
       ) : (
         /* EMPTY CART */
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4 text-center">
-          <p className="text-gray-700">
-            There are no items in this cart
-          </p>
+          <p className="text-gray-700">There are no items in this cart</p>
           <button
             onClick={() => navigate("/products")}
             className="border border-red-600 text-black font-bold px-6 py-3 rounded-lg hover:bg-red-200 transition"
