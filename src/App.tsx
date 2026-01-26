@@ -7,6 +7,7 @@ import Contact from "./pages/Contact"
 import Cart from "./pages/Cart"
 import SingleProduct from "./pages/SingleProduct"
 import Favorite from "./pages/Favorite"
+import Checkout from "./pages/Checkout"
 
 
 const App = () => {
@@ -42,6 +43,10 @@ const App = () => {
         {
           path: "/favorite",
           element: <Favorite />
+        },
+        {
+          path: "/checkout",
+          element: <Checkout />
         },
       ]
     }

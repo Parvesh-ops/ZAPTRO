@@ -182,7 +182,9 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition">
+              <button
+              onClick={()=> navigate('/checkout')}
+              className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition">
                 Proceed to Checkout ({cartItems.length})
               </button>
 

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import api from "../api/api";
 import { useContext, useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { useFavorite } from "../context/FavoriteContext";
 
 const SingleProduct = () => {
   const { id } = useParams<string>();
+  const navigate = useNavigate()
 
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -142,7 +143,9 @@ const SingleProduct = () => {
               <FaShoppingCart /> Add to Cart
             </button>
 
-            <button className="bg-black text-white px-6 py-2 rounded-md">
+            <button 
+            onClick={()=>navigate('/checkout')}
+            className="bg-black text-white px-6 py-2 rounded-md">
               💳 Buy Now
             </button>
           </div>
