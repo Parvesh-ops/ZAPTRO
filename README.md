@@ -1,73 +1,95 @@
-# React + TypeScript + Vite
+# 🛍️ Modern E-Commerce Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **modern, responsive, and user-friendly e-commerce web application** designed for showcasing and selling products.  
+This project focuses on delivering a **clean, intuitive, and seamless shopping experience**, from browsing products to adding them to the cart, checkout, and payment.
 
-Currently, two official plugins are available:
+Built with scalability, performance, and real-world e-commerce flow in mind ✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🌟 Highlights 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Clean & professional UI inspired by real platforms 
+- Realistic cart → checkout → payment flow
+- Single source of truth for pricing (industry best practice)
+- Well-structured codebase suitable for production-level apps
+- Fully responsive & mobile-friendly
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Key Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🛒 Product Listing
+- View all available products with:
+  - High-quality images  
+  - Prices  
+  - Detailed product titles  
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 🔍 Search & Filters
+- Search products by **name or keyword**
+- Filter products by:
+  - Category
+  - Brand
+  - Price range  
+- Makes navigation fast and user-friendly
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### ➕ Add to Cart
+- Add products to cart with a single click
+- Increase / decrease quantity
+- Remove individual items
+- Clear entire cart
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🎟️ Discounts & Fees
+- Voucher-based **percentage discounts**
+- Handling fee applied at checkout
+- Clear price breakdown:
+  - Subtotal
+  - Handling fee
+  - Discount
+  - Final total
+- Savings clearly shown to users
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 📦 Checkout
+- Order summary
+- Final price calculated **only once**
+- Discount + handling fee applied correctly
+- Follows real-world e-commerce architecture
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 💳 Payment
+- Multiple payment options (UI simulation):
+  - Credit / Debit Card
+  - eSewa (Mock)
+  - Cash on Delivery
+- Read-only order summary
+- No price recalculation (industry standard)
+
+### 🎨 Smooth UI / UX
+- Interactive hover effects
+- Clean animations
+- Consistent spacing & typography
+- Fully responsive across devices
+
+### 🧠 State Management
+- Uses **React Context API** to manage:
+  - Cart state
+  - Products
+  - Filters
+  - Pricing logic  
+- Clean and scalable global state handling
+
+---
+
+## 🧱 Tech Stack
+
+- **React.js** – Dynamic & interactive user interfaces
+- **TypeScript** – Type safety & better maintainability
+- **Tailwind CSS** – Utility-first CSS for fast, clean styling
+- **React Router DOM** – Seamless page navigation
+- **React Icons** – Clean, customizable icons
+- **Context API** – Global state management
+- **Fake Store API** – Product data source
+
+---
+
+
+
