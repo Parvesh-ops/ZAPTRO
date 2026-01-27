@@ -70,23 +70,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        increaseQty,
-        decreaseQty,
-        clearCart,
-        totalPrice,
-        totalQuantity,
-      }}
-    >
+      value={{ cartItems, addToCart, removeFromCart, increaseQty, decreaseQty, clearCart, totalPrice, totalQuantity,}}>
       {children}
     </CartContext.Provider>
   );
 };
 
-// ✅ Custom hook (THIS FIXES YOUR Cart.tsx)
+//  Custom hook 
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
