@@ -10,15 +10,15 @@ import { MdOutlineFavorite } from "react-icons/md";
 import { useFavorite } from "../context/FavoriteContext";
 
 const SingleProduct = () => {
-  const { id } = useParams<string>();
+  const { id } = useParams<string>(); // for single product -> const params = useParams()
   const navigate = useNavigate()
 
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
 
-  const cartContext = useContext(CartContext);
-  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorite();
+  const cartContext = useContext(CartContext);   // for cart context
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorite();  // for favorite context
 
   if (!cartContext) throw new Error("Must be used within CartProvider");
   const { addToCart } = cartContext;
@@ -26,7 +26,7 @@ const SingleProduct = () => {
   const getSingleProduct = async () => {
     try {
       setLoading(true);
-      const response = await api.get<Product>(`/products/${id}`);
+      const response = await api.get<Product>(`/products/${id}`);   // for single product
       setSingleProduct(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -42,7 +42,7 @@ const SingleProduct = () => {
     if (id) getSingleProduct();
   }, [id]);
 
-  // ✅ SAFE favorite check
+  //  SAFE favorite check
   const favorite = singleProduct ? isFavorite(singleProduct.id) : false;
 
   if (loading) {
