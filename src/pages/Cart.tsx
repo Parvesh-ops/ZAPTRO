@@ -9,33 +9,30 @@ import { useState } from "react";
 const HANDLING_FEE = 5;  // for voulcher
 
 const Cart = () => {
-  const {
-    cartItems,
-    increaseQty,
-    decreaseQty,
-    removeFromCart,
-    totalPrice,
-    clearCart,
-  } = useCart();
+  const { cartItems, increaseQty, decreaseQty, removeFromCart, totalPrice, clearCart, } = useCart();
 
-  const [voucher, setVoucher] = useState("");
-  const [discount, setDiscount] = useState(0);
+  const [voucher, setVoucher] = useState<string>("");
+  const [discountPercent, setDiscountPercent] = useState<number>(0);
+
 
   const navigate = useNavigate();
-
   const handleApplyVoucher = () => {
     if (voucher.trim().toLowerCase() === "save10") {
-      setDiscount(10);
+      setDiscountPercent(10);
     } else {
-      setDiscount(0);
+      setDiscountPercent(0);
       alert("Invalid voucher code");
     }
   };
 
+  const discountAmount = (totalPrice * discountPercent) / 100;
+
+
   const finalTotal = Math.max(
-    totalPrice + HANDLING_FEE - discount,
+    totalPrice + HANDLING_FEE - discountAmount,
     0
   );
+
 
   return (
     <div className="mt-10 max-w-7xl mx-auto mb-10 px-4">
@@ -167,12 +164,20 @@ const Cart = () => {
                   </div>
                 </div>
 
-                {discount > 0 && (
+                {discountPercent > 0 && (
                   <div className="flex justify-between text-green-600 font-semibold">
-                    <span>Discount</span>
-                    <span>${discount.toFixed(2)}</span>
+                    <span>Discount (-{discountPercent}%)</span>
+                    <span>- ${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
+
+                {discountPercent > 0 && (
+                  <p className="text-green-600 text-sm mt-2">
+                    You saved ${discountAmount.toFixed(2)} 🎉
+                  </p>
+                )}
+
+
 
                 <hr />
 
@@ -183,8 +188,8 @@ const Cart = () => {
               </div>
 
               <button
-              onClick={()=> navigate('/checkout')}
-              className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition">
+                onClick={() => navigate('/checkout')}
+                className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition">
                 Proceed to Checkout ({cartItems.length})
               </button>
 

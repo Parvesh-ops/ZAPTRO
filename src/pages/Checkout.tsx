@@ -1,27 +1,32 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const DELIVERY_FEE = 0;
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const { cartItems, totalPrice } = useCart();
   const [voucher, setVoucher] = useState("");
-  const [discount, setDiscount] = useState(0);
+  const [discountPercent, setDiscountPercent] = useState<number>(0);
 
-  const total = Math.max(
-    totalPrice - discount,
-    0
-  );
+  const HANDLING_FEE = 5;  // for voulcher
 
   const handleApplyVoucher = () => {
     if (voucher.trim().toLowerCase() === "save10") {
-      setDiscount(10);
+      setDiscountPercent(10);
     } else {
-      setDiscount(0);
+      setDiscountPercent(0);
       alert("Invalid voucher code");
     }
   };
 
+  const discountAmount = (totalPrice * discountPercent) / 100;
+
+  const finalTotal = Math.max(
+    totalPrice + HANDLING_FEE - discountAmount,
+    0
+  );
 
 
   return (
@@ -136,16 +141,29 @@ const Checkout = () => {
                 </div>
 
                 <div className="flex justify-between">
+                  <span className="text-gray-600 gap-1">
+                    Handling Fee
+                  </span>
+                  <span>${HANDLING_FEE.toFixed(2)}</span>
+                </div>
+
+                <div className="flex justify-between">
                   <span className="text-gray-600">Delivery Fee</span>
                   <span>$ {DELIVERY_FEE}</span>
                 </div>
               </div>
 
-              {discount > 0 && (
-                <div className="flex mt-2.5 justify-between text-green-600 font-semibold">
-                  <span>Discount</span>
-                  <span>${discount.toFixed(2)}</span>
+              {discountPercent > 0 && (
+                <div className="flex mt-5 justify-between text-green-600 font-semibold">
+                  <span>Discount (-{discountPercent}%)</span>
+                  <span>- ${discountAmount.toFixed(2)}</span>
                 </div>
+              )}
+
+              {discountPercent > 0 && (
+                <p className="text-green-600 text-sm mt-2">
+                  You saved ${discountAmount.toFixed(2)} 🎉
+                </p>
               )}
 
               <hr className="my-4" />
@@ -153,7 +171,7 @@ const Checkout = () => {
               <div className="flex justify-between items-center">
                 <h3 className="font-bold text-lg">Total</h3>
                 <p className="text-xl font-bold text-orange-500">
-                  $ {total.toFixed(0)}
+                  $ {finalTotal.toFixed(0)}
                 </p>
               </div>
 
@@ -161,7 +179,9 @@ const Checkout = () => {
                 All taxes included
               </p>
 
-              <button className="w-full mt-5 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
+              <button
+                onClick={() => navigate('/payment')}
+                className="w-full mt-5 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
                 Proceed to Pay
               </button>
             </div>

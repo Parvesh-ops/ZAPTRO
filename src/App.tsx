@@ -8,6 +8,7 @@ import Cart from "./pages/Cart"
 import SingleProduct from "./pages/SingleProduct"
 import Favorite from "./pages/Favorite"
 import Checkout from "./pages/Checkout"
+import Payment from "./pages/Payment"
 
 
 const App = () => {
@@ -47,6 +48,10 @@ const App = () => {
         {
           path: "/checkout",
           element: <Checkout />
+        },
+        {
+          path: "/payment",
+          element: <Payment />
         },
       ]
     }
