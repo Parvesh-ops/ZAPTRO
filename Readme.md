@@ -6,8 +6,8 @@ This project focuses on delivering a **clean, intuitive, and seamless shopping e
 Built with scalability, performance, and real-world e-commerce flow in mind ✨
 
 ---
-## 🌟 Live Preview
-[[ https://movie-booking-app.vercel.app](https://movie-ticket-booking-pied-beta.vercel.app/)](https://zaptro-6p4x.vercel.app/)
+## Live Preview
+https://zaptro-sand.vercel.app/
 
 ## 🌟 Highlights 
 
@@ -92,6 +92,5 @@ Built with scalability, performance, and real-world e-commerce flow in mind ✨
 - **Fake Store API** – Product data source
 
 ---
-
 
 
