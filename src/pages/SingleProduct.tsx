@@ -124,14 +124,18 @@ const SingleProduct = () => {
                   ? removeFromFavorites(singleProduct.id)
                   : addToFavorites(singleProduct)
               }
-              className={`p-3 rounded-full transition active:scale-95
-                ${favorite ? "bg-red-500" : "bg-gray-800 hover:bg-gray-700"}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full transition active:scale-95
+    ${favorite ? "bg-red-500" : "bg-gray-800 hover:bg-gray-700"}`}
             >
               <MdOutlineFavorite
                 size={20}
                 className={favorite ? "text-white" : "text-gray-300"}
               />
+              <span className="text-sm text-white">
+                {favorite ? "Wishlisted" : "Add to Wishlist"}
+              </span>
             </button>
+
           </div>
 
           {/* ACTIONS */}
@@ -143,9 +147,9 @@ const SingleProduct = () => {
               <FaShoppingCart /> Add to Cart
             </button>
 
-            <button 
-            onClick={()=>navigate('/checkout')}
-            className="bg-black text-white px-6 py-2 rounded-md">
+            <button
+              onClick={() => navigate('/checkout')}
+              className="bg-black text-white px-6 py-2 rounded-md">
               💳 Buy Now
             </button>
           </div>
