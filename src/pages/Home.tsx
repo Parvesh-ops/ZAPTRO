@@ -1,7 +1,7 @@
 import Carousel from "../components/Carousel/Carousel"
 import Category from "../components/category/Category"
 import Features from "../components/Features/Features"
-import MidBanner from "../components/MidBanner/MidBanner"
+import MidBanner from "../components/midBanner/MidBanner"
 
 
 const Home = () => {
