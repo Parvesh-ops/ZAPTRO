@@ -9,6 +9,8 @@ import SingleProduct from "./pages/SingleProduct"
 import Favorite from "./pages/Favorite"
 import Checkout from "./pages/Checkout"
 import Payment from "./pages/Payment"
+import DashboardLayout from "./dashboard/DashboardLayout"
+import DashboardHome from "./dashboard/DashboardHome"
 
 
 const App = () => {
@@ -27,7 +29,7 @@ const App = () => {
         },
         {
           path: "/products/:id", //for dynamic route single page of product
-          element: <SingleProduct/>
+          element: <SingleProduct />
         },
         {
           path: "/about",
@@ -53,6 +55,23 @@ const App = () => {
           path: "/payment",
           element: <Payment />
         },
+        {
+          path: "*",
+          element: (
+            <h1 className="min-h mt-50 flex justify-center text-center">
+              404 - Page Not Found
+            </h1>
+          ),
+        },
+      ],
+    },
+
+    //Admin Dashboard
+    {
+      path: "/Dashboard",
+      element: <DashboardLayout />,
+      children: [
+        { index: true ,  element: <DashboardHome /> },
       ]
     }
   ])
