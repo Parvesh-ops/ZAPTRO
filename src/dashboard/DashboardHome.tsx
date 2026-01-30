@@ -32,15 +32,9 @@ const Dashboard = () => {
 
     const totalProducts = products.length;
 
-    const totalRevenue = products.reduce(
-        (sum, product) => sum + product.price,
-        0
-    );
+    const totalRevenue = products.reduce((sum, product) => sum + product.price, 0);
 
-    const totalOrders = products.reduce(
-        (sum, product) => sum + product.rating.count,
-        0
-    );
+    const totalOrders = products.reduce((sum, product) => sum + product.rating.count, 0)
 
     const avgRating = products.reduce((sum, product) => sum + product.rating.rate, 0) / (totalProducts);
 
