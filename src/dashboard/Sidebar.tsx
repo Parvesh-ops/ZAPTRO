@@ -1,16 +1,6 @@
 import { NavLink } from "react-router-dom";
 import profile from "../assets/profile.png";
-import {
-  Home,
-  BarChart2,
-  DollarSign,
-  ShoppingCart,
-  Users,
-  Settings,
-  FileText,
-  CreditCard,
-  Mail,
-} from "lucide-react";
+import { Home, BarChart2, DollarSign, ShoppingCart, Users, Settings, FileText, CreditCard, Mail,} from "lucide-react";
 
 interface UserProfile {
   firstName: string;
@@ -34,7 +24,7 @@ const AdminSidebar = () => {
      }`;
 
   return (
-    <aside className="w-64 min-h-screen bg-white text-gray-900 shadow-2xl p-6">
+   <aside className="sticky top-0 w-64 h-screen bg-white text-gray-900 shadow-2xl p-6 z-50">
       {/* Profile */}
       <div className="flex flex-col items-center mb-10">
         <img
