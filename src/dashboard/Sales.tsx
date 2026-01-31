@@ -99,8 +99,8 @@ const Sales = () => {
                         <YAxis />
                         <Tooltip />
                         <Bar dataKey="revenue" radius={[6, 6, 0, 0]}>
-                            {revenueData.map((entry, index) => (
-                                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                            {revenueData.map((_, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Bar>
                     </BarChart>
