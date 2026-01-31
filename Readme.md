@@ -9,6 +9,7 @@ Built with scalability, performance, and real-world e-commerce flow in mind ✨
 ## Live Preview
 https://zaptro-sand.vercel.app/
 
+---
 ## 🌟 Highlights 
 
 - Clean & professional UI inspired by real platforms 
