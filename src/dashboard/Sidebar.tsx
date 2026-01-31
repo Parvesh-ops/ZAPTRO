@@ -57,7 +57,7 @@ const AdminSidebar = () => {
           Management
         </h2>
 
-        <NavLink to="items" className={linkClasses}>
+        <NavLink to="product" className={linkClasses}>
           <ShoppingCart size={20} /> Products
         </NavLink>
 

@@ -17,6 +17,7 @@ import DashboardLayout from "./dashboard/DashboardLayout";
 import DashboardHome from "./dashboard/DashboardHome";
 import Sales from "./dashboard/Sales";
 import Charts from "./dashboard/Charts";
+import Product from "./dashboard/Products";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -52,6 +53,7 @@ const App = () => {
         { index: true, element: <DashboardHome /> },
         { path: "charts", element: <Charts /> },
         { path: "sales", element: <Sales /> },
+        { path: "Product", element: <Product /> },
       ],
     },
   ]);
