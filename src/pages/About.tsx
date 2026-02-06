@@ -56,7 +56,7 @@ const About = () => {
       {/* Features Section */}
       <div className="bg-white py-12 sm:py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-black mb-8 sm:mb-12">
             Why Choose Us
           </h2>
 
@@ -143,7 +143,7 @@ const About = () => {
       {/* CTA Section */}
       <div className=" text-black font-bold py-6 sm:py-10 px-3">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+          <h2 className="text-2xl sm:text-3xl font-extrabold mb-3">
             Ready to Start Shopping?
           </h2>
           <p className="text-sm sm:text-base mb-6">
