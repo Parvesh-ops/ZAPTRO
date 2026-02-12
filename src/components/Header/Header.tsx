@@ -9,9 +9,11 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const cartContext = useContext(CartContext);
-  const { cartItems } = cartContext!;
 
+  const { cartItems } = cartContext!;
   const { favorites } = useFavorite();
+
+  const totalQty = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `${isActive ? "text-red-500 border-b-2 border-red-500" : "text-gray-800"}
@@ -38,17 +40,27 @@ const Header = () => {
           {/* Favorite */}
           <Link to="/favorite" className="relative">
             <GrFavorite className="h-7 w-7" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
-              {favorites.length}
-            </span>
+            {
+              favorites.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                  {favorites.length}
+                </span>
+              )
+            }
+
           </Link>
 
           {/* Cart */}
           <Link to="/cart" className="relative">
             <IoCartOutline className="h-7 w-7" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
-              {cartItems.length}
-            </span>
+            {
+              totalQty > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                  {totalQty}
+                </span>
+              )
+            }
+
           </Link>
         </nav>
 
@@ -56,16 +68,25 @@ const Header = () => {
         <div className="flex items-center gap-4 md:hidden">
           <Link to="/cart" className="relative">
             <IoCartOutline className="h-7 w-7" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
-              {cartItems.length}
-            </span>
+            {
+              totalQty > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                  {totalQty}
+                </span>
+              )
+            }
           </Link>
 
           <Link to="/favorite" className="relative">
             <GrFavorite className="h-7 w-7" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
-              {favorites.length}
-            </span>
+            {
+              favorites.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                  {favorites.length}
+                </span>
+              )
+            }
+
           </Link>
 
           <button
