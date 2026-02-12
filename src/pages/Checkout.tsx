@@ -1,193 +1,225 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
 
-const DELIVERY_FEE = 0;
+const DELIVERY_CHARGE = 5;
 
 const Checkout = () => {
-  const navigate = useNavigate();
   const { cartItems, totalPrice } = useCart();
-  const [voucher, setVoucher] = useState("");
-  const [discountPercent, setDiscountPercent] = useState<number>(0);
 
-  const HANDLING_FEE = 5;  // for voulcher
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    city: "",
+    district: "",
+    landmark: "",
+    address: "",
+    paymentMethod: "esewa",
+  });
 
-  const handleApplyVoucher = () => {
-    if (voucher.trim().toLowerCase() === "save10") {
-      setDiscountPercent(10);
-    } else {
-      setDiscountPercent(0);
-      alert("Invalid voucher code");
-    }
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const discountAmount = (totalPrice * discountPercent) / 100;
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
 
-  const finalTotal = Math.max(
-    totalPrice + HANDLING_FEE - discountAmount,
-    0
-  );
+    if (!formData.fullName) newErrors.fullName = "Full name is required";
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.phone) newErrors.phone = "Phone number is required";
+    if (!formData.city) newErrors.city = "City is required";
+    if (!formData.district) newErrors.district = "District is required";
+    if (!formData.address) newErrors.address = "Address is required";
 
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (!validate()) return;
+
+    alert(
+      formData.paymentMethod === "esewa"
+        ? "Redirecting to eSewa..."
+        : "Order placed with Cash on Delivery"
+    );
+  };
+
+  const finalTotal = totalPrice + DELIVERY_CHARGE;
 
   return (
-    <div className="bg-gray-100 min-h-screen py-6">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="bg-gray-100 min-h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        {/* PAGE TITLE */}
-        <h1 className="text-2xl font-bold mb-6">Checkout</h1>
+        {/* LEFT SIDE */}
+        <div className="lg:col-span-8 space-y-6">
 
-        {/* SHIPPING ADDRESS */}
-        <div className="bg-white p-5 rounded-xl shadow mb-6">
-          <div className="flex justify-between items-center">
-            <h2 className="font-semibold text-lg">Shipping Address</h2>
-            <button className="text-blue-500 text-sm">Change</button>
+          {/* 1. GENERAL INFO */}
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h2 className="font-bold text-lg mb-4">1. General Information</h2>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium">Full Name</label>
+                <input
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+                  onChange={handleChange}
+                />
+                {errors.fullName && <p className="text-red-500 text-xs">{errors.fullName}</p>}
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+                  onChange={handleChange}
+                />
+                {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Phone Number</label>
+                <input
+                  name="phone"
+                  placeholder="98XXXXXXXX"
+                  className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+                  onChange={handleChange}
+                />
+                {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+              </div>
+            </div>
           </div>
-          <p className="mt-2 text-gray-600 text-sm">
-            Parvesh Chaudhary <br />
-            Biratnagar, Nepal <br />
-            Phone: 98XXXXXXXX
-          </p>
+
+          {/* 2. ADDRESS */}
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h2 className="font-bold text-lg mb-4">2. Shipping Address</h2>
+
+            <div className="grid md:grid-cols-2 gap-4">
+
+              {/* City */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1">City</label>
+                <input
+                  name="city"
+                  placeholder="Enter city"
+                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  onChange={handleChange}
+                />
+                {errors.city && (
+                  <span className="text-red-500 text-xs mt-1">{errors.city}</span>
+                )}
+              </div>
+
+              {/* District */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1">District</label>
+                <input
+                  name="district"
+                  placeholder="Enter district"
+                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  onChange={handleChange}
+                />
+                {errors.district && (
+                  <span className="text-red-500 text-xs mt-1">{errors.district}</span>
+                )}
+              </div>
+            </div>
+
+            {/* Full Address */}
+            <div className="mt-4 flex flex-col">
+              <label className="text-sm font-medium mb-1">Full Address</label>
+              <textarea
+                name="address"
+                placeholder="Street, ward no, house no"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                onChange={handleChange}
+              />
+              {errors.address && (
+                <span className="text-red-500 text-xs mt-1">{errors.address}</span>
+              )}
+            </div>
+          </div>
+
+
+          {/* 3. PAYMENT */}
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h2 className="font-bold text-lg mb-4">3. Payment Method</h2>
+
+            <div className="space-y-3">
+              <label className="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="esewa"
+                  checked={formData.paymentMethod === "esewa"}
+                  onChange={handleChange}
+                />
+                Pay with eSewa
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cod"
+                  checked={formData.paymentMethod === "cod"}
+                  onChange={handleChange}
+                />
+                Cash on Delivery
+              </label>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* RIGHT SIDE – ORDER SUMMARY */}
+        <div className="lg:col-span-4">
+          <div className="bg-white p-6 rounded-xl shadow sticky top-24">
+            <h2 className="font-bold text-lg mb-4">Order Summary</h2>
 
-          {/* LEFT SIDE */}
-          <div className="lg:col-span-8 space-y-6">
-
-            {/* DELIVERY OPTION */}
-            <div className="bg-white p-5 rounded-xl shadow">
-              <h2 className="font-semibold mb-4">Delivery Option</h2>
-
-              <div className="border rounded-lg p-4 flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center">
-                  ✓
-                </div>
+            {cartItems.map(item => (
+              <div key={item.id} className="flex gap-4 mb-4">
+                <img src={item.image} className="w-16 h-16 object-contain " />
                 <div>
-                  <p className="font-semibold">Standard Delivery</p>
-                  <p className="text-gray-500 text-sm">
-                    Get by 28-29 Jan
-                  </p>
+                  <p className="text-sm font-medium">{item.title}</p>
+                  <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                 </div>
-                <p className="ml-auto font-bold text-gray-800">
-                  $ {DELIVERY_FEE}
-                </p>
+              </div>
+            ))}
+
+            <div className="space-y-2 text-sm mt-4">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>$ {totalPrice.toFixed(0)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Delivery Charge</span>
+                <span>$ {DELIVERY_CHARGE}</span>
+              </div>
+              <hr />
+              <div className="flex justify-between font-bold">
+                <span>Total</span>
+                <span className="text-red-500">$ {finalTotal.toFixed(0)}</span>
               </div>
             </div>
 
-            {/* PRODUCT LIST */}
-            <div className="bg-white p-5 rounded-xl shadow">
-              <h2 className="font-semibold mb-4">
-                Products ({cartItems.length})
-              </h2>
-
-              {cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between border-b last:border-none pb-4 mb-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-20 h-20 object-contain"
-                    />
-                    <div>
-                      <p className="font-medium line-clamp-2">
-                        {item.title}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Qty: {item.quantity}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="font-bold text-gray-800">
-                    ${(item.price * item.quantity).toFixed(0)}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <button
+              onClick={handleSubmit}
+              className="w-full mt-5 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold"
+            >
+              {formData.paymentMethod === "esewa" ? "Pay with eSewa" : "Place Order"}
+            </button>
           </div>
-
-          {/* RIGHT SIDE – SUMMARY */}
-          <div className="lg:col-span-4">
-            <div className="bg-white p-6 rounded-xl shadow sticky top-24">
-
-              <h2 className="font-bold text-lg mb-4">Order Summary</h2>
-
-              {/* PROMO */}
-              <div className="mb-4">
-                <p className="text-sm font-medium mb-1">Promotion</p>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={voucher}
-                    onChange={(e) => setVoucher(e.target.value)}
-                    placeholder="Enter voucher code"
-                    className="flex-1 border rounded-l px-3 py-2 text-sm"
-                  />
-                  <button
-                    onClick={handleApplyVoucher}
-                    className="bg-orange-500 text-white px-4 rounded-lg">
-                    APPLY
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600"> Items total({cartItems.length})</span>
-                  <span>$ {totalPrice.toFixed(0)}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span className="text-gray-600 gap-1">
-                    Handling Fee
-                  </span>
-                  <span>${HANDLING_FEE.toFixed(2)}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Delivery Fee</span>
-                  <span>$ {DELIVERY_FEE}</span>
-                </div>
-              </div>
-
-              {discountPercent > 0 && (
-                <div className="flex mt-5 justify-between text-green-600 font-semibold">
-                  <span>Discount (-{discountPercent}%)</span>
-                  <span>- ${discountAmount.toFixed(2)}</span>
-                </div>
-              )}
-
-              {discountPercent > 0 && (
-                <p className="text-green-600 text-sm mt-2">
-                  You saved ${discountAmount.toFixed(2)} 🎉
-                </p>
-              )}
-
-              <hr className="my-4" />
-
-              <div className="flex justify-between items-center">
-                <h3 className="font-bold text-lg">Total</h3>
-                <p className="text-xl font-bold text-orange-500">
-                  $ {finalTotal.toFixed(0)}
-                </p>
-              </div>
-
-              <p className="text-xs text-gray-400 mt-2">
-                All taxes included
-              </p>
-
-              <button
-                onClick={() => navigate('/payment')}
-                className="w-full mt-5 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
-                Proceed to Pay
-              </button>
-            </div>
-          </div>
-
         </div>
+
       </div>
     </div>
   );
